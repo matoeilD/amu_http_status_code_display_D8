@@ -96,6 +96,8 @@ function amu_http_status_code_display_preprocess(&$variables, $hook) {
 
   if(isset($variables['region']) && $variables['region'] == 'content'){
     $variables['module_path'] = $path;
+    $variables['http_host'] = $_SERVER['HTTP_HOST'];
+
     $variables['#attached']['library'][] =  'amu_http_status_code_display/amu_http_status_code_display';
 
     $config =  \Drupal::config('amustatuscode.settings');
