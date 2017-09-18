@@ -6,7 +6,7 @@ use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 
 class AmuHttpStatusCodeDisplayConfigForm extends ConfigFormBase {
-//SiteInformationForm
+
 
   public function getFormId() {
     return 'AmuHttpStatusCodeDisplayConfigForm';
