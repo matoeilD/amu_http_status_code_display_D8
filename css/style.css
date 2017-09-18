@@ -4,4 +4,35 @@
 
 .status-code{
   background: white;
+  display: flex;
+  position: relative;
+  height:100vh;
+}
+
+.status-code .img{
+  width:100%;
+}
+
+.status-code img{
+  width:100%;
+}
+
+.status-code .msg {
+  position: relative;
+  top: 18vh;
+  left: -20%;
+}
+
+@media only screen and (max-width: 767px) {
+
+  .status-code{
+   display: block;
+  }
+  .status-code .msg {
+    position: relative;
+    top: unset ;
+    left: unset;
+  }
+
+
 }
