@@ -1,0 +1,135 @@
+<?php
+
+
+
+use Drupal\Core\Routing\RouteMatch;
+
+
+
+
+/*
+ * @author m.dandonneau
+ *
+ * setting 40x template suggestions
+ *
+ */
+function amu_http_status_code_display_theme_suggestions_region_alter(&$suggestions, $vars, $hook) {
+
+  $region = $vars['elements']['#region'];
+  // region template to replace
+  $selected_region = array(
+    'content'
+  );
+  $route_name = \Drupal::routeMatch()->getRouteName();
+
+
+  //mapping the route with its suggestion hook
+  $http_error_suggestions = [
+    'system.403' => '403',
+    'system.404' => '404',
+  ];
+
+  if (in_array($region, $selected_region)) {
+
+    //if http status code error
+    if (isset($http_error_suggestions[$route_name])) {
+      $suggestions[] = 'region' . '__' . 'content'. '__' . $http_error_suggestions[$route_name];
+    }
+
+    //TODO maintenance and maintenance-offline , remain to activate it only in front and only if no rights
+  /*  if( \Drupal::state()->get('system.maintenance_mode')) {
+         $suggestions[] = 'region' . '__' . 'content'. '__' . 'maintenance';
+    }*/
+  }
+}
+
+
+
+/*
+ *
+ * @author m.dandonneau
+ *
+ * make drupal knows the templates are located in the module
+ *
+ * */
+function amu_http_status_code_display_theme($existing, $type, $theme, $path) {
+
+  $arguments403= array(
+    'template' => 'region--content--403',
+    'base hook' => 'page',
+  );
+
+  $arguments404= array(
+    'template' => 'region--content--404',
+    'base hook' => 'page',
+  );
+
+  $argumentsMaintenance= array(
+    'template' => 'region--content--maintenance',
+    'base hook' => 'page',
+  );
+
+
+  //mapping the hook with its template
+  return array(
+    'region__content__403' =>  $arguments403,
+    'region__content__404' =>  $arguments404,
+    'region__content__maintenance' =>  $argumentsMaintenance,
+  );
+}
+
+
+/**
+ *
+ * @author m.dandonneau
+ *
+ * injecting variable into twig templates & adding libraries
+ *
+ * @param $variables
+ * @param $hook
+ *
+ */
+function amu_http_status_code_display_preprocess(&$variables, $hook) {
+
+  $module_handler = Drupal::service('module_handler');
+  $path = $module_handler->getModule('amu_http_status_code_display')->getPath();
+
+  if(isset($variables['region']) && $variables['region'] == 'content'){
+    $variables['module_path'] = $path;
+    $variables['#attached']['library'][] =  'amu_http_status_code_display/amu_http_status_code_display';
+
+    $config =  \Drupal::config('amustatuscode.settings');
+    $variables['msg404']  = $config->get('404_message', '');
+    $variables['msg403']  = $config->get('403_message', '');
+   
+  }
+}
+
+/**
+ *
+ * @author m.dandonneau
+ *
+ * Setting 40x template suggestions  kept for maintenance page
+ */
+/*function amu_http_status_code_display_theme_suggestions_page(array $variables){
+
+  $path_args = explode('/', trim(\Drupal::service('path.current')->getPath(), '/'));
+  $suggestions = theme_get_suggestions($path_args, 'node');
+
+  //mapping the route with its suggestion hook
+  $http_error_suggestions = [
+    'system.403' => 'page__403',
+    'system.404' => 'page__404',
+    'system.maintenance_mode' => 'mainten',
+  ];
+  $route_name = \Drupal::routeMatch()->getRouteName();
+
+  if (isset($http_error_suggestions[$route_name])) {
+
+    $suggestions[] = $http_error_suggestions[$route_name];
+  }
+
+  return $suggestions;
+}*/
+
+

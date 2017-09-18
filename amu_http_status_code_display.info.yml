@@ -1,0 +1,6 @@
+name: AMU HTTP STATUS CODE DISPLAY
+type: module
+description: Personnalisation des pages 404, 403
+core: 8.x
+package: AMU
+configure: admin/config/services/amu_http_status_code_display
