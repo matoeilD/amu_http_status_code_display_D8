@@ -1,7 +1,4 @@
 
-
-
-
 .status-code{
   background: white;
   display: flex;
@@ -33,6 +30,5 @@
     top: unset ;
     left: unset;
   }
-
 
 }

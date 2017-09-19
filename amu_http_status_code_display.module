@@ -1,8 +1,4 @@
 <?php
-
-
-
-
 /*
  * @author m.dandonneau
  *
@@ -17,7 +13,6 @@ function amu_http_status_code_display_theme_suggestions_region_alter(&$suggestio
     'content'
   );
   $route_name = \Drupal::routeMatch()->getRouteName();
-
 
   //mapping the route with its suggestion hook
   $http_error_suggestions = [
@@ -99,7 +94,6 @@ function amu_http_status_code_display_preprocess(&$variables, $hook) {
     $config =  \Drupal::config('amustatuscode.settings');
     $variables['msg404']  = $config->get('404_message', '');
     $variables['msg403']  = $config->get('403_message', '');
-   
   }
 }
 

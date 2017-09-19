@@ -7,16 +7,13 @@ use Drupal\Core\Form\FormStateInterface;
 
 class AmuHttpStatusCodeDisplayConfigForm extends ConfigFormBase {
 
-
   public function getFormId() {
     return 'AmuHttpStatusCodeDisplayConfigForm';
   }
 
-
   public function buildForm(array $form, FormStateInterface $form_state) {
 
     $config = $this->config('amustatuscode.settings');
-
 
     $form = parent::buildForm($form, $form_state);
 
@@ -44,7 +41,6 @@ class AmuHttpStatusCodeDisplayConfigForm extends ConfigFormBase {
     $config->save();
 
     return parent::submitForm($form, $form_state);
-
   }
 
   public function getEditableConfigNames() {
